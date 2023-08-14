@@ -208,6 +208,22 @@ def process_matrix(TEST, INIT):
           
     return CHECK
 
+def simple_check(start_matrix):
+    for direction in DIRECTIONS:
+        new_matrix = move_tile(deepcopy(start_matrix), direction)
+        if new_matrix == END:
+           return True
+    return False
+
+def move_tile(matrix, direction):
+    for row in range(len(matrix)):
+        for col in range(len(matrix[0])):
+            if matrix[row][col] == 0:
+                new_row = row + DIRECTIONS[direction][0]
+                new_col = col + DIRECTIONS[direction][1]
+                if 0 <= new_row < len(matrix) and 0 <= new_col < len(matrix[0]):
+                    matrix[row][col], matrix[new_row][new_col] = matrix[new_row][new_col], matrix[row][col]
+                return matrix
 # Ma trận TEST mẫu
 
 
@@ -215,14 +231,16 @@ if __name__ == '__main__':
     #it is start matrix
     puzzle = read_input_matrices()
     CHECK = process_matrix(END, initial_state_matrix)
-    if(isSolvable(CHECK)) :
-      print("Solvable")
+    if(simple_check(initial_state_matrix)):
+      print("Ma trận khởi tạo có thể trở thành ma trận đích!")
+    elif(isSolvable(CHECK)) :
+      print("Ma trận khởi tạo có thể trở thành ma trận đích!")
     else :
-      print("Not Solvable")
+      print("Ma trận khởi tạo không thể trở thành ma trận đích!")
       exit()
          
     br = main(puzzle[0])
-    print('total steps : ', len(br) - 1)
+    print('Tổng số bước di chuyển : ', len(br) - 1)
     print()
     print(dash + dash + right_junction, "INPUT", left_junction + dash + dash)
     for b in br:
