@@ -61,7 +61,7 @@ def print_puzzle(array):
         else:
             print(middle_line)
 
-#it is the node which store each state of puzzle
+#Đây là node lưu trữ các trạng thái của puzzle
 class Node:
     def __init__(self, current_node, previous_node, g, h, dir):
         self.current_node = current_node
@@ -79,7 +79,7 @@ def get_pos(current_state, element):
         if element in current_state[row]:
             return (row, current_state[row].index(element))
 
-#it is a distance calculation algo
+#Tính chi phí (khoảng cách) tới vị trí đích
 def euclidianCost(current_state):
     cost = 0
     for row in range(len(current_state)):
@@ -88,7 +88,7 @@ def euclidianCost(current_state):
             cost += abs(row - pos[0]) + abs(col - pos[1])
     return cost
 
-#get adjucent Nodes
+#Lấy các Nodes kề
 def getAdjNode(node):
     listNode = []
     emptyPos = get_pos(node.current_node, 0)
@@ -104,7 +104,7 @@ def getAdjNode(node):
 
     return listNode
 
-#get the best node available among nodes
+#Tìm nodes tốt nhất trong danh sách listNodes
 def getBestNode(openSet):
     firstIter = True
 
@@ -115,7 +115,7 @@ def getBestNode(openSet):
             bestF = bestNode.f()
     return bestNode
 
-#this functionn create the smallest path
+#Hàm tạo đường đi ngắn nhất cho bài toán
 def buildPath(closedSet):
     node = closedSet[str(END)]
     branch = list()
@@ -134,7 +134,7 @@ def buildPath(closedSet):
 
     return branch
 
-#main function of node
+#Hàm main để thực hiện thuật toán
 def main(puzzle):
     open_set = {str(puzzle): Node(puzzle, puzzle, 0, euclidianCost(puzzle), "")}
     closed_set = {}
